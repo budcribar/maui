@@ -408,8 +408,6 @@ namespace Microsoft.Maui
 				if (f is NavigationViewFragment pf)
 					_stackNavigationManager.OnNavigationViewFragmentResumed(fm, pf);
 
-				var rootmanager = _stackNavigationManager.MauiContext.GetNavigationRootManager();
-
 				AToolbar? toolbar = null;
 
 				if(_stackNavigationManager.NavigationView is IToolbarElement te &&
@@ -424,14 +422,20 @@ namespace Microsoft.Maui
 					new AppBarConfiguration
 						.Builder(_stackNavigationManager.NavGraph);
 
-				if (rootmanager.DrawerLayout != null)
-					appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(rootmanager.DrawerLayout);
-
-				var appbarConfig = 
-					appbarConfigBuilder.Build();
-
 				if (toolbar != null)
 				{
+					// TODO: MAUI Hackey way of wiring up Drawer Layout
+					// But currently you can only have a nav bar with a Navigation View					
+					if (toolbar.Parent is DrawerLayout dl1)
+						appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(dl1);
+					else if (toolbar.Parent?.Parent is DrawerLayout dl2)
+						appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(dl2);
+					else if (toolbar.Parent?.Parent?.Parent is DrawerLayout dl3)
+						appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(dl3);
+
+					var appbarConfig =
+						appbarConfigBuilder.Build();
+
 					NavigationUI
 						.SetupWithNavController(toolbar, controller, appbarConfig);
 

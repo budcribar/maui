@@ -24,7 +24,7 @@ namespace Microsoft.Maui.Controls.Platform
 	{
 		static Drawable? _defaultNavigationIcon;
 
-		public static void UpdateIsVisible(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateIsVisible(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			_ = nativeToolbar.Context ?? throw new ArgumentNullException(nameof(nativeToolbar.Context));
 
@@ -54,7 +54,7 @@ namespace Microsoft.Maui.Controls.Platform
 			}
 		}
 
-		public static void UpdateTitleIcon(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateTitleIcon(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			_ = nativeToolbar.Context ?? throw new ArgumentNullException(nameof(nativeToolbar.Context));
 			_ = toolbar?.Handler?.MauiContext ?? throw new ArgumentNullException(nameof(toolbar.Handler.MauiContext));
@@ -80,7 +80,7 @@ namespace Microsoft.Maui.Controls.Platform
 			});
 		}
 
-		public static void UpdateBackButton(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateBackButton(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			bool isNavigated = toolbar.HasBackStack;
 
@@ -115,7 +115,7 @@ namespace Microsoft.Maui.Controls.Platform
 			nativeToolbar.UpdateBarTextColor(toolbar);
 		}
 
-		public static void UpdateBarBackgroundColor(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateBarBackgroundColor(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			var tintColor = toolbar.BarBackgroundColor;
 
@@ -128,25 +128,25 @@ namespace Microsoft.Maui.Controls.Platform
 			}
 		}
 
-		public static void UpdateBarBackground(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateBarBackground(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			Brush barBackground = toolbar.BarBackground;
 			nativeToolbar.UpdateBackground(barBackground);
 		}
 
-		public static void UpdateIconColor(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateIconColor(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			var navIconColor = toolbar.IconColor;
 			if (navIconColor != null && nativeToolbar.NavigationIcon != null)
 				DrawableExtensions.SetColorFilter(nativeToolbar.NavigationIcon, navIconColor, FilterMode.SrcAtop);
 		}
 
-		public static void UpdateTitle(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateTitle(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			nativeToolbar.Title = toolbar?.Title ?? string.Empty;
 		}
 
-		public static void UpdateBarTextColor(this AToolbar nativeToolbar, Toolbar toolbar)
+		public static void UpdateBarTextColor(this AToolbar nativeToolbar, ControlsToolbar toolbar)
 		{
 			var textColor = toolbar.BarTextColor;
 			if (textColor != null)

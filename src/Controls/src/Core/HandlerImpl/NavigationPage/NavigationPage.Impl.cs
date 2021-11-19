@@ -124,7 +124,10 @@ namespace Microsoft.Maui.Controls
 		{
 			get
 			{
-				if (this.FindParentWith(x => (x is IToolbarElement te && te.Toolbar != null), true) is IToolbarElement te)
+				if (this.Toolbar != null)
+					return Toolbar;
+
+				if (this.FindParentWith(x => (x is IToolbarElement te && te.Toolbar != null), false) is IToolbarElement te)
 				{
 					return te.Toolbar;
 				}

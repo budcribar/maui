@@ -12,28 +12,28 @@ namespace Microsoft.Maui.Controls.Handlers
 #if ANDROID || WINDOWS
 	public partial class ToolbarHandler
 	{
-		public static IPropertyMapper<Toolbar, ToolbarHandler> Mapper =
-			   new PropertyMapper<Toolbar, ToolbarHandler>(ElementMapper)
+		public static IPropertyMapper<ControlsToolbar, ToolbarHandler> Mapper =
+			   new PropertyMapper<ControlsToolbar, ToolbarHandler>(ElementMapper)
 			   {
-				   [nameof(Toolbar.IsVisible)] = MapIsVisible,
-				   [nameof(Toolbar.BackButtonVisible)] = MapBackButtonVisible,
-				   [nameof(Toolbar.TitleIcon)] = MapTitleIcon,
-				   [nameof(Toolbar.TitleView)] = MapTitleView,
-				   [nameof(Toolbar.IconColor)] = MapIconColor,
-				   [nameof(Toolbar.Title)] = MapTitle,
-				   [nameof(Toolbar.ToolbarItems)] = MapToolbarItems,
-				   [nameof(Toolbar.BackButtonTitle)] = MapBackButtonTitle,
-				   [nameof(Toolbar.BarBackgroundColor)] = MapBarBackgroundColor,
-				   [nameof(Toolbar.BarBackground)] = MapBarBackground,
-				   [nameof(Toolbar.BarTextColor)] = MapBarTextColor,
-				   [nameof(Toolbar.IconColor)] = MapIconColor,
+				   [nameof(ControlsToolbar.IsVisible)] = MapIsVisible,
+				   [nameof(ControlsToolbar.BackButtonVisible)] = MapBackButtonVisible,
+				   [nameof(ControlsToolbar.TitleIcon)] = MapTitleIcon,
+				   [nameof(ControlsToolbar.TitleView)] = MapTitleView,
+				   [nameof(ControlsToolbar.IconColor)] = MapIconColor,
+				   [nameof(ControlsToolbar.Title)] = MapTitle,
+				   [nameof(ControlsToolbar.ToolbarItems)] = MapToolbarItems,
+				   [nameof(ControlsToolbar.BackButtonTitle)] = MapBackButtonTitle,
+				   [nameof(ControlsToolbar.BarBackgroundColor)] = MapBarBackgroundColor,
+				   [nameof(ControlsToolbar.BarBackground)] = MapBarBackground,
+				   [nameof(ControlsToolbar.BarTextColor)] = MapBarTextColor,
+				   [nameof(ControlsToolbar.IconColor)] = MapIconColor,
 #if WINDOWS
 				   [PlatformConfiguration.WindowsSpecific.Page.ToolbarPlacementProperty.PropertyName] = MapToolbarPlacement,
 				   [PlatformConfiguration.WindowsSpecific.Page.ToolbarDynamicOverflowEnabledProperty.PropertyName] = MapToolbarDynamicOverflowEnabled,
 #endif
 			   };
 
-		public static CommandMapper<Toolbar, ToolbarHandler> CommandMapper = new()
+		public static CommandMapper<ControlsToolbar, ToolbarHandler> CommandMapper = new()
 		{
 		};
 

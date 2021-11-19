@@ -20,8 +20,8 @@ namespace Microsoft.Maui.Controls
 			if (appbarLayout == null || this is not IToolbarElement te || Handler?.MauiContext == null)
 				return;
 
-			var nativeToolBar = te.Toolbar.ToNative(Handler.MauiContext, true);
-			if (nativeToolBar.Parent == nativeToolBar)
+			var nativeToolBar = te.Toolbar?.ToNative(Handler.MauiContext, true);
+			if (nativeToolBar == null || nativeToolBar?.Parent == nativeToolBar)
 				return;
 
 			appbarLayout.AddView(nativeToolBar, 0);

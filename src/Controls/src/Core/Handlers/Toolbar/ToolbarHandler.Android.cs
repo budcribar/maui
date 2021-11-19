@@ -12,7 +12,7 @@ using Microsoft.Maui.Handlers;
 
 namespace Microsoft.Maui.Controls.Handlers
 {
-	public partial class ToolbarHandler : ElementHandler<Toolbar, MaterialToolbar>
+	public partial class ToolbarHandler : ElementHandler<ControlsToolbar, MaterialToolbar>
 	{
 		IViewHandler? _titleViewHandler;
 		Container? _titleView;
@@ -103,57 +103,57 @@ namespace Microsoft.Maui.Controls.Handlers
 		}
 
 
-		public static void MapBarTextColor(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapBarTextColor(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateBarTextColor(arg2);
 		}
 
-		public static void MapBarBackground(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapBarBackground(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateBarBackground(arg2);
 		}
 
-		public static void MapBarBackgroundColor(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapBarBackgroundColor(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateBarBackgroundColor(arg2);
 		}
 
-		public static void MapBackButtonTitle(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapBackButtonTitle(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateBackButton(arg2);
 		}
 
-		public static void MapToolbarItems(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapToolbarItems(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.UpdateMenu();
 		}
 
-		public static void MapTitle(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapTitle(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateTitle(arg2);
 		}
 
-		public static void MapIconColor(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapIconColor(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateIconColor(arg2);
 		}
 
-		public static void MapTitleView(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapTitleView(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.UpdateTitleView();
 		}
 
-		public static void MapTitleIcon(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapTitleIcon(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateTitleIcon(arg2);
 		}
 
-		public static void MapBackButtonVisible(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapBackButtonVisible(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateBackButton(arg2);
 		}
 
-		public static void MapIsVisible(ToolbarHandler arg1, Toolbar arg2)
+		public static void MapIsVisible(ToolbarHandler arg1, ControlsToolbar arg2)
 		{
 			arg1.NativeView.UpdateIsVisible(arg2);			
 		}
