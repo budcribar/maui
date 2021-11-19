@@ -193,6 +193,9 @@ namespace Microsoft.Maui.Controls.Handlers
 			var rootManager =
 				_context.GetNavigationRootManager();
 
+			if (rootManager.RootView == null)
+				return;
+
 			if (IsBottomTabPlacement)
 			{
 				id = Resource.Id.navigationlayout_bottomtabs;

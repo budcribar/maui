@@ -11,7 +11,7 @@ using Microsoft.Maui.Layouts;
 
 namespace Microsoft.Maui.Controls
 {
-	public partial class NavigationPage : INavigationView
+	public partial class NavigationPage : INavigationView, IToolbarElement
 	{
 		// If the user is making overlapping navigation requests this is used to fire once all navigation 
 		// events have been processed
@@ -120,12 +120,25 @@ namespace Microsoft.Maui.Controls
 		}
 
 
+		Toolbar IToolbarElement.Toolbar
+		{
+			get
+			{
+				if (this.FindParentWith(x => (x is IToolbarElement te && te.Toolbar != null), true) is IToolbarElement te)
+				{
+					return te.Toolbar;
+				}
+
+				return null;
+			}
+		}
+
 		void OnAppearing(object sender, EventArgs e)
 		{
 			// Update the Container level Toolbar with my Toolbar information
-			if(this.FindParentWith(x => (x is IToolbarElement te && te.Toolbar != null), true) is IToolbarElement te)
+			if(this is IToolbarElement te && te.Toolbar is ControlsToolbar ct)
 			{
-				te.Toolbar.ApplyNavigationPage(this);
+				ct.ApplyNavigationPage(this);
 			}
 		}
 

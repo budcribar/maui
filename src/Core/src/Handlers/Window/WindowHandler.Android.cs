@@ -11,10 +11,9 @@ namespace Microsoft.Maui.Handlers
 		public static void MapContent(WindowHandler handler, IWindow window)
 		{
 			_ = handler.MauiContext ?? throw new InvalidOperationException($"{nameof(MauiContext)} should have been set by base class.");
-
-			var nativeContent = window.Content.ToContainerView(handler.MauiContext);
+			
 			var rootManager = handler.MauiContext.GetNavigationRootManager();
-			rootManager.SetContentView(nativeContent);
+			rootManager.SetRootView(window.Content);
 			handler.NativeView.SetContentView(rootManager.RootView);
 		}
 	}

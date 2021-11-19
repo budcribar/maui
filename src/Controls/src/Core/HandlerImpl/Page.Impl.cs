@@ -18,8 +18,8 @@ namespace Microsoft.Maui.Controls
 			set
 			{
 				_toolbar = value;
-				if (this is NavigationPage np)
-					_toolbar.ApplyNavigationPage(np);
+				if (this is NavigationPage np && value is ControlsToolbar ct)
+					ct.ApplyNavigationPage(np);
 			}
 		}
 

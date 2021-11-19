@@ -6,12 +6,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Microsoft.Maui.Controls
 {
-	internal interface IToolbarElement
-	{
-		Toolbar Toolbar { get;}
-	}
-
-	public class Toolbar : Microsoft.Maui.IElement
+	public class ControlsToolbar : Toolbar, Maui.IElement
 	{
 		NavigationPage _currentNavigationPage;
 		Page _currentPage;
@@ -31,7 +26,7 @@ namespace Microsoft.Maui.Controls
 		ToolbarTracker _toolbarTracker = new ToolbarTracker();
 		bool _dynamicOverflowEnabled;
 
-		public Toolbar()
+		public ControlsToolbar()
 		{
 			_toolbarTracker.CollectionChanged += (_, __) => ToolbarItems = _toolbarTracker.ToolbarItems;
 		}
@@ -50,8 +45,6 @@ namespace Microsoft.Maui.Controls
 		public string Title { get => _title; set => SetProperty(ref _title, value); }
 		public VisualElement TitleView { get => _titleView; set => SetProperty(ref _titleView, value); }
 		public bool DynamicOverflowEnabled { get => _dynamicOverflowEnabled; set => SetProperty(ref _dynamicOverflowEnabled, value); }
-
-		public IElementHandler Handler { get; set; }
 
 		Maui.IElement _parent;
 		Maui.IElement Maui.IElement.Parent => _parent;

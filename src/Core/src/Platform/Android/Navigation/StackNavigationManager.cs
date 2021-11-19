@@ -6,22 +6,22 @@ using Android.Views;
 using AndroidX.AppCompat.View;
 using AndroidX.AppCompat.Widget;
 using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.DrawerLayout.Widget;
 using AndroidX.Navigation;
 using AndroidX.Navigation.Fragment;
 using AndroidX.Navigation.UI;
 using Google.Android.Material.AppBar;
 using AView = Android.Views.View;
+using AToolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace Microsoft.Maui
 {
 	public class StackNavigationManager
-	{
-		Toolbar? _toolbar;
+	{		
 		NavHostFragment? _navHost;
 		FragmentNavigator? _fragmentNavigator;
 		NavGraph? _navGraph;
 		IView? _currentPage;
-		CoordinatorLayout? _navigationLayout;
 		ProcessBackClick BackClick { get; }
 		internal IView? VirtualView { get; private set; }
 		internal INavigationView? NavigationView { get; private set; }
@@ -41,9 +41,6 @@ namespace Microsoft.Maui
 		internal NavGraph NavGraph => _navGraph ??
 			throw new InvalidOperationException($"NavGraph cannot be null");
 
-		internal CoordinatorLayout NavigationLayout => _navigationLayout ??
-			throw new InvalidOperationException($"NavigationLayout cannot be null");
-
 		public IView CurrentPage
 			=> _currentPage ?? throw new InvalidOperationException("CurrentPage cannot be null");
 
@@ -55,10 +52,6 @@ namespace Microsoft.Maui
 		{
 			BackClick = new ProcessBackClick(this);
 		}
-
-		internal Toolbar? Toolbar =>
-			_toolbar ??=
-			NavigationLayout.FindViewById<MaterialToolbar>(Resource.Id.navigationlayout_toolbar);
 
 		/*
 		 * The important thing to know going into reading this method is that it's not possible to
@@ -274,11 +267,10 @@ namespace Microsoft.Maui
 		{
 		}
 
-		public virtual void Connect(IView navigationView, CoordinatorLayout nativeView)
+		public virtual void Connect(IView navigationView)
 		{
 			VirtualView = navigationView;
 			NavigationView = (INavigationView)navigationView;
-			_navigationLayout = nativeView;
 
 			var fragmentManager = MauiContext?.GetFragmentManager();
 			_ = fragmentManager ?? throw new InvalidOperationException($"GetFragmentManager returned null");
@@ -416,19 +408,34 @@ namespace Microsoft.Maui
 				if (f is NavigationViewFragment pf)
 					_stackNavigationManager.OnNavigationViewFragmentResumed(fm, pf);
 
+				var rootmanager = _stackNavigationManager.MauiContext.GetNavigationRootManager();
+
+				AToolbar? toolbar = null;
+
+				if(_stackNavigationManager.NavigationView is IToolbarElement te &&
+					te?.Toolbar?.Handler?.NativeView is AToolbar nativeToolBar)
+				{
+					toolbar = nativeToolBar;
+				}				
+
 				// Wire up the toolbar to the currently made visible Fragment
 				var controller = NavHostFragment.FindNavController(f);
-				var appbarConfig =
+				var appbarConfigBuilder =
 					new AppBarConfiguration
-						.Builder(controller.Graph)
-						.Build();
+						.Builder(_stackNavigationManager.NavGraph);
 
-				if (_stackNavigationManager.Toolbar != null)
+				if (rootmanager.DrawerLayout != null)
+					appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(rootmanager.DrawerLayout);
+
+				var appbarConfig = 
+					appbarConfigBuilder.Build();
+
+				if (toolbar != null)
 				{
 					NavigationUI
-						.SetupWithNavController(_stackNavigationManager.Toolbar, controller, appbarConfig);
+						.SetupWithNavController(toolbar, controller, appbarConfig);
 
-					_stackNavigationManager.Toolbar.SetNavigationOnClickListener(_stackNavigationManager.BackClick);
+					toolbar.SetNavigationOnClickListener(_stackNavigationManager.BackClick);
 				}
 			}
 

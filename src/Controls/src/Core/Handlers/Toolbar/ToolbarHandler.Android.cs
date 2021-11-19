@@ -4,16 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Android.Content;
-using Android.Content.Res;
-using Android.Graphics;
-using Android.Graphics.Drawables;
 using Android.Views;
-using AndroidX.AppCompat.App;
-using AndroidX.AppCompat.Graphics.Drawable;
-using AndroidX.DrawerLayout.Widget;
+using Android.Runtime;
 using Google.Android.Material.AppBar;
 using Microsoft.Maui.Controls.Platform;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 
 namespace Microsoft.Maui.Controls.Handlers
@@ -30,9 +24,13 @@ namespace Microsoft.Maui.Controls.Handlers
 
 		protected override MaterialToolbar CreateNativeElement()
 		{
-			return NavigationRootManager!
-						.NavigationLayout
-						.FindViewById<MaterialToolbar>(Resource.Id.navigationlayout_toolbar)!;
+			LayoutInflater? li = MauiContext?.GetLayoutInflater();
+			_ = li ?? throw new InvalidOperationException($"LayoutInflater cannot be null");
+
+			var view = li.Inflate(Resource.Layout.maui_toolbar, null)?.JavaCast<MaterialToolbar>();
+			_ = view ?? throw new InvalidOperationException($"Resource.Layout.maui_toolbar view not found");
+
+			return view;
 		}
 
 		protected virtual void OnToolbarItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -157,7 +155,7 @@ namespace Microsoft.Maui.Controls.Handlers
 
 		public static void MapIsVisible(ToolbarHandler arg1, Toolbar arg2)
 		{
-			arg1.NativeView.UpdateIsVisible(arg2);
+			arg1.NativeView.UpdateIsVisible(arg2);			
 		}
 
 		internal class Container : ViewGroup

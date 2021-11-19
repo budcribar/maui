@@ -66,6 +66,7 @@ namespace Microsoft.Maui.Controls.Hosting
 #endif
 #if __ANDROID__
 			{ typeof(TabbedPage), typeof(Controls.Handlers.TabbedPageHandler) },
+			{ typeof(FlyoutPage), typeof(FlyoutViewHandler) },
 #endif
 		};
 
