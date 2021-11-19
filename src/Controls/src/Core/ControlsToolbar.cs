@@ -25,9 +25,11 @@ namespace Microsoft.Maui.Controls
 		IEnumerable<ToolbarItem> _toolbarItems;
 		ToolbarTracker _toolbarTracker = new ToolbarTracker();
 		bool _dynamicOverflowEnabled;
+		bool _hasAppeared;
 
-		public ControlsToolbar()
+		public ControlsToolbar(Maui.IElement parent)
 		{
+			_parent = parent;
 			_toolbarTracker.CollectionChanged += (_, __) => ToolbarItems = _toolbarTracker.ToolbarItems;
 		}
 
@@ -59,11 +61,14 @@ namespace Microsoft.Maui.Controls
 			Handler?.UpdateValue(propertyName);
 		}
 
-		internal void ApplyNavigationPage(NavigationPage navigationPage)
+		internal void ApplyNavigationPage(NavigationPage navigationPage, bool hasAppeared)
 		{
-			_parent = _parent ?? navigationPage.FindParentOfType<Window>();
+			_hasAppeared = hasAppeared;
 			if (_currentNavigationPage == navigationPage)
+			{
+				IsVisible = hasAppeared;
 				return;
+			}
 
 			if (_currentNavigationPage != null)
 				_currentNavigationPage.PropertyChanged -= OnPropertyChanged;
@@ -136,7 +141,7 @@ namespace Microsoft.Maui.Controls
 			_toolbarTracker.Target = navigationPage.CurrentPage;
 			_toolbarTracker.AdditionalTargets = navigationPage.GetParentPages();
 			ToolbarItems = _toolbarTracker.ToolbarItems;
-			IsVisible = NavigationPage.GetHasNavigationBar(currentPage);
+			IsVisible = NavigationPage.GetHasNavigationBar(currentPage) && _hasAppeared;
 			BackButtonVisible = NavigationPage.GetHasBackButton(currentPage) && stack.Count > 1;
 
 			if (navigationPage.IsSet(PlatformConfiguration.AndroidSpecific.AppCompat.NavigationPage.BarHeightProperty))

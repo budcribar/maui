@@ -27,7 +27,7 @@ namespace Microsoft.Maui.Controls.Handlers
 			LayoutInflater? li = MauiContext?.GetLayoutInflater();
 			_ = li ?? throw new InvalidOperationException($"LayoutInflater cannot be null");
 
-			var view = li.Inflate(Resource.Layout.maui_toolbar, null)?.JavaCast<MaterialToolbar>();
+			var view = li.Inflate(Microsoft.Maui.Resource.Layout.maui_toolbar, null)?.JavaCast<MaterialToolbar>();
 			_ = view ?? throw new InvalidOperationException($"Resource.Layout.maui_toolbar view not found");
 
 			return view;

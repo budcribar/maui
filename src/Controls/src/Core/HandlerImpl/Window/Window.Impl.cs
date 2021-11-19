@@ -29,7 +29,7 @@ namespace Microsoft.Maui.Controls
 
 		public Window()
 		{
-			_toolBar = new ControlsToolbar();
+			_toolBar = new ControlsToolbar(this);
 			_visualChildren = new List<IVisualTreeElement>();
 			AlertManager = new AlertManager(this);
 			ModalNavigationManager = new ModalNavigationManager(this);
@@ -332,7 +332,7 @@ namespace Microsoft.Maui.Controls
 				_owner.OnModalPushing(modal);
 
 				modal.Parent = _owner;
-				modal.Toolbar ??= new ControlsToolbar();
+				modal.Toolbar ??= new ControlsToolbar(modal);
 
 				if (modal.NavigationProxy.ModalStack.Count == 0)
 				{

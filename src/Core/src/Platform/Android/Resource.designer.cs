@@ -110,6 +110,9 @@ namespace Microsoft.Maui
 			// aapt resource value: 0x7F0B002E
 			public static int drawer_layout = 2131427374;
 
+			// aapt resource value: 0x7F0B003E
+			public static int maui_toolbar = 2131427390;
+
 			// aapt resource value: 0x7F0B005A
 			public static int navigationlayout = 2131427418;
 

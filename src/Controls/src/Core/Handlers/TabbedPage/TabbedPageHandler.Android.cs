@@ -5,6 +5,7 @@ using AndroidX.ViewPager2.Widget;
 using Google.Android.Material.AppBar;
 using Google.Android.Material.BottomNavigation;
 using Google.Android.Material.Tabs;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 
 namespace Microsoft.Maui.Controls.Handlers

@@ -7,7 +7,7 @@ namespace Microsoft.Maui.Controls
 		IView IFlyoutView.Flyout => this.Flyout;
 		IView IFlyoutView.Detail => this.Detail;
 
-		Toolbar IToolbarElement.Toolbar => _toolBar ??= new ControlsToolbar();
+		Toolbar IToolbarElement.Toolbar => _toolBar ??= new ControlsToolbar(this);
 		Toolbar? _toolBar;
 	}
 }

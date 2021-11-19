@@ -26,6 +26,7 @@ namespace Microsoft.Maui.Controls
 		partial void Init()
 		{
 			this.Appearing += OnAppearing;
+			this.Disappearing += OnDisappearing;
 		}
 
 		Thickness IView.Margin => Thickness.Zero;
@@ -136,12 +137,21 @@ namespace Microsoft.Maui.Controls
 			}
 		}
 
+		void OnDisappearing(object sender, EventArgs e)
+		{
+			// Update the Container level Toolbar with my Toolbar information
+			if (this is IToolbarElement te && te.Toolbar is ControlsToolbar ct)
+			{
+				ct.ApplyNavigationPage(this, HasAppeared);
+			}
+		}
+
 		void OnAppearing(object sender, EventArgs e)
 		{
 			// Update the Container level Toolbar with my Toolbar information
 			if(this is IToolbarElement te && te.Toolbar is ControlsToolbar ct)
 			{
-				ct.ApplyNavigationPage(this);
+				ct.ApplyNavigationPage(this, HasAppeared);
 			}
 		}
 

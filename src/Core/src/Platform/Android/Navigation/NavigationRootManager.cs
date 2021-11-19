@@ -12,11 +12,14 @@ namespace Microsoft.Maui
 {
 	public class NavigationRootManager
 	{
-		//Toolbar? _toolbar;
 		View? _navigationLayout;
 		IMauiContext _mauiContext;
 		AView? _rootView;
 		ViewFragment? _viewFragment;
+
+		// TODO MAUI: temporary event to alert when rootview is ready
+		// handlers and various bits use this to start interacting with rootview
+		internal event EventHandler? RootViewChanged;
 
 		internal View NavigationLayout => _navigationLayout 
 			?? throw new InvalidOperationException($"Resource.Layout.navigationlayout missing");
@@ -72,6 +75,8 @@ namespace Microsoft.Maui
 
 				DrawerLayout.AddView(NavigationLayout, 0);
 			}
+
+			RootViewChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		internal virtual void SetContentView(AView? view) =>

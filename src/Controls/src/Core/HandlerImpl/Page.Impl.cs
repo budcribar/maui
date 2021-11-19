@@ -19,7 +19,7 @@ namespace Microsoft.Maui.Controls
 			{
 				_toolbar = value;
 				if (this is NavigationPage np && value is ControlsToolbar ct)
-					ct.ApplyNavigationPage(np);
+					ct.ApplyNavigationPage(np, HasAppeared);
 			}
 		}
 
