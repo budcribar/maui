@@ -153,6 +153,14 @@ namespace Microsoft.Maui.Controls
 			{
 				ct.ApplyNavigationPage(this, HasAppeared);
 			}
+			// This means the toolbar hasn't been initialized on window
+			else
+			{
+				var window = this.FindParentOfType<Window>();
+				var toolbar = new ControlsToolbar(window);
+				toolbar.ApplyNavigationPage(this, true);
+				window.Toolbar = toolbar;
+			}
 		}
 
 		// This is used for navigation events that don't effect the currently visible page

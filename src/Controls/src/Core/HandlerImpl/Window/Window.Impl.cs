@@ -23,13 +23,20 @@ namespace Microsoft.Maui.Controls
 
 		ReadOnlyCollection<Element>? _logicalChildren;
 		List<IVisualTreeElement> _visualChildren;
+		private Toolbar? _toolbar;
 
-		Toolbar IToolbarElement.Toolbar => _toolBar;
-		Toolbar _toolBar;
+		Toolbar? IToolbarElement.Toolbar => Toolbar;
+		internal Toolbar? Toolbar
+		{
+			get => _toolbar; set
+			{
+				_toolbar = value;
+				Handler?.UpdateValue(nameof(IToolbarElement.Toolbar));
+			}
+		}
 
 		public Window()
 		{
-			_toolBar = new ControlsToolbar(this);
 			_visualChildren = new List<IVisualTreeElement>();
 			AlertManager = new AlertManager(this);
 			ModalNavigationManager = new ModalNavigationManager(this);

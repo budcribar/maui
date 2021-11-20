@@ -27,17 +27,17 @@ namespace Maui.Controls.Sample
 						{
 							Title = "Tab 1",
 							Flyout = CreatePage(),
-							Detail = new NavigationPage(CreatePage()) { Title = "Detail" }
+							Detail = new NavigationPage(CreatePage()) { Title = "Page 1" }
 						},
 						new FlyoutPage()
 						{
 							Title = "tab 2",
 							Flyout = CreatePage(),
-							Detail = new NavigationPage(CreatePage()) { Title = "Detail" }
+							Detail = new NavigationPage(CreatePage()) { Title = "Page 2" }
 						},
 						new NavigationPage(CreatePage())
 						{
-							Title = "navpage 2"
+							Title = "Page 3"
 						}
 					}
 				});
@@ -49,23 +49,29 @@ namespace Maui.Controls.Sample
 		//		Detail = new NavigationPage(CreatePage()) { Title = "Detail" }
 		//	});
 
-
-		ContentPage CreatePage() => new ContentPage
+		int i = 0;
+		ContentPage CreatePage()
 		{
-			Title = "Title",
-			BackgroundColor = Colors.Purple,
-			Content = new Button
+			ContentPage page = null;
+
+			page = new ContentPage
 			{
+				Title = $"Title {++i}",
 				BackgroundColor = Colors.Purple,
-				Text = "Hello Sandbox!",
-				HorizontalOptions = LayoutOptions.Center,
-				VerticalOptions = LayoutOptions.Center,
-				Command = new Command(async () =>
+				Content = new Button
 				{
-					await 
-					(Application.Current.MainPage as FlyoutPage).Detail.Navigation.PushAsync(CreatePage());
-				})
-			}
-		};
+					BackgroundColor = Colors.Purple,
+					Text = "Hello Sandbox!",
+					HorizontalOptions = LayoutOptions.Center,
+					VerticalOptions = LayoutOptions.Center,
+					Command = new Command(async () =>
+					{
+						await page.Navigation.PushAsync(CreatePage());
+					})
+				}
+			};
+
+			return page;
+		}
 	}
 }

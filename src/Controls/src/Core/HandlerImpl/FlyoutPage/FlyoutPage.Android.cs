@@ -3,6 +3,7 @@ using System;
 using Android.App;
 using Android.Views;
 using AndroidX.AppCompat.App;
+using Google.Android.Material.AppBar;
 using Microsoft.Maui.Handlers;
 using AView = Android.Views.View;
 
@@ -25,7 +26,6 @@ namespace Microsoft.Maui.Controls
 				return;
 
 			appbarLayout.AddView(nativeToolBar, 0);
-			
 		}
 
 		public static void MapToolbar(FlyoutViewHandler handler, FlyoutPage view)

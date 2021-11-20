@@ -408,12 +408,16 @@ namespace Microsoft.Maui
 				if (f is NavigationViewFragment pf)
 					_stackNavigationManager.OnNavigationViewFragmentResumed(fm, pf);
 
-				AToolbar? toolbar = null;
+				AToolbar? nativeToolbar = null;
+				IToolbarElement? toolbarElement = null;
+				Toolbar? toolbar = null;
 
-				if(_stackNavigationManager.NavigationView is IToolbarElement te &&
-					te?.Toolbar?.Handler?.NativeView is AToolbar nativeToolBar)
+				if (_stackNavigationManager.NavigationView is IToolbarElement te &&
+					te?.Toolbar?.Handler?.NativeView is AToolbar ntb)
 				{
-					toolbar = nativeToolBar;
+					toolbarElement = te;
+					nativeToolbar = ntb;
+					toolbar = te.Toolbar;
 				}				
 
 				// Wire up the toolbar to the currently made visible Fragment
@@ -422,24 +426,28 @@ namespace Microsoft.Maui
 					new AppBarConfiguration
 						.Builder(_stackNavigationManager.NavGraph);
 
-				if (toolbar != null)
+				if (nativeToolbar != null && toolbar != null)
 				{
 					// TODO: MAUI Hackey way of wiring up Drawer Layout
 					// But currently you can only have a nav bar with a Navigation View					
-					if (toolbar.Parent is DrawerLayout dl1)
+					if (nativeToolbar.Parent is DrawerLayout dl1)
 						appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(dl1);
-					else if (toolbar.Parent?.Parent is DrawerLayout dl2)
+					else if (nativeToolbar.Parent?.Parent is DrawerLayout dl2)
 						appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(dl2);
-					else if (toolbar.Parent?.Parent?.Parent is DrawerLayout dl3)
+					else if (nativeToolbar.Parent?.Parent?.Parent is DrawerLayout dl3)
 						appbarConfigBuilder = appbarConfigBuilder.SetOpenableLayout(dl3);
 
 					var appbarConfig =
 						appbarConfigBuilder.Build();
 
 					NavigationUI
-						.SetupWithNavController(toolbar, controller, appbarConfig);
+						.SetupWithNavController(nativeToolbar, controller, appbarConfig);
 
-					toolbar.SetNavigationOnClickListener(_stackNavigationManager.BackClick);
+					if (toolbar.BackButtonVisible && toolbar.IsVisible)
+					{
+						// Wiring up to this will break the Drawer Toggle button if it's visible
+						nativeToolbar.SetNavigationOnClickListener(_stackNavigationManager.BackClick);
+					}
 				}
 			}
 
